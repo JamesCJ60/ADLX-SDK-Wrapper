@@ -1,0 +1,45 @@
+C:\Users\james\source\repos\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.exe
+C:\Users\james\source\repos\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.deps.json
+C:\Users\james\source\repos\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.runtimeconfig.json
+C:\Users\james\source\repos\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.dll
+C:\Users\james\source\repos\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.pdb
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.csproj.AssemblyReference.cache
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.AssemblyInfoInputs.cache
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.AssemblyInfo.cs
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.csproj.CoreCompileInputs.cache
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.dll
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\refint\TestConsole.dll
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.pdb
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.genruntimeconfig.cache
+C:\Users\james\source\repos\TestConsole\TestConsole\obj\Debug\net6.0\ref\TestConsole.dll
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.exe
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.deps.json
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.runtimeconfig.json
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.dll
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.pdb
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.csproj.AssemblyReference.cache
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.AssemblyInfoInputs.cache
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.AssemblyInfo.cs
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.csproj.CoreCompileInputs.cache
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.dll
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\refint\TestConsole.dll
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.pdb
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.genruntimeconfig.cache
+C:\Users\james\Desktop\Driver GUI\TestConsole\TestConsole\obj\Debug\net6.0\ref\TestConsole.dll
+G:\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.exe
+G:\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.deps.json
+G:\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.runtimeconfig.json
+G:\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.dll
+G:\TestConsole\TestConsole\bin\Debug\net6.0\TestConsole.pdb
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.csproj.AssemblyReference.cache
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.GeneratedMSBuildEditorConfig.editorconfig
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.AssemblyInfoInputs.cache
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.AssemblyInfo.cs
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.csproj.CoreCompileInputs.cache
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.dll
+G:\TestConsole\TestConsole\obj\Debug\net6.0\refint\TestConsole.dll
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.pdb
+G:\TestConsole\TestConsole\obj\Debug\net6.0\TestConsole.genruntimeconfig.cache
+G:\TestConsole\TestConsole\obj\Debug\net6.0\ref\TestConsole.dll
