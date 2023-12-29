@@ -45,10 +45,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -90,10 +90,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -134,10 +134,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -179,10 +179,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -224,10 +224,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -268,10 +268,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -313,10 +313,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -358,10 +358,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
@@ -402,10 +402,10 @@ extern "C" {
                     }
                 }
             }
-
-            // terminate ADLX
-            g_ADLXHelp.Terminate();
         }
+
+        // terminate ADLX
+        g_ADLXHelp.Terminate();
 
         return result;
     }
