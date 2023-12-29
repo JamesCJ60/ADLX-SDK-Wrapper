@@ -81,7 +81,6 @@ extern "C" {
                     {
                         IADLXDisplayIntegerScalingPtr displayIntegerScaling;
                         res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
                         if (ADLX_SUCCEEDED(res))
                         {
                             adlx_bool enabled = false;
@@ -130,6 +129,140 @@ extern "C" {
                         if (ADLX_SUCCEEDED(res))
                         {
                             ADLX_RESULT res = displayIntegerScaling->SetEnabled(enabled);
+                            result = ADLX_SUCCEEDED(res);
+                        }
+                    }
+                }
+            }
+
+            // terminate ADLX
+            g_ADLXHelp.Terminate();
+        }
+
+        return result;
+    }
+
+    ADLX_DisplaySettings bool HasGPUScalingSupport(int GPU)
+    {
+        // Define return code
+        ADLX_RESULT  res = ADLX_FAIL;
+        bool result = false;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get display service
+            IADLXDisplayServicesPtr displayService;
+            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
+            if (ADLX_SUCCEEDED(res))
+            {
+                // Get display list
+                IADLXDisplayListPtr displayList;
+                res = displayService->GetDisplays(&displayList);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Inspect for the first display in the list
+                    adlx_uint index = GPU;
+                    IADLXDisplayPtr display;
+                    res = displayList->At(index, &display);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        IADLXDisplayGPUScalingPtr gpuScaling;
+                        res = displayService->GetGPUScaling(display, &gpuScaling);
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            adlx_bool supported = false;
+                            gpuScaling->IsSupported(&supported);
+                            result = supported;
+                        }
+                    }
+                }
+            }
+
+            // terminate ADLX
+            g_ADLXHelp.Terminate();
+        }
+
+        return result;
+    }
+
+    ADLX_DisplaySettings bool GetGPUScaling(int GPU)
+    {
+        // Define return code
+        ADLX_RESULT  res = ADLX_FAIL;
+        bool result = false;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get display service
+            IADLXDisplayServicesPtr displayService;
+            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
+            if (ADLX_SUCCEEDED(res))
+            {
+                // Get display list
+                IADLXDisplayListPtr displayList;
+                res = displayService->GetDisplays(&displayList);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Inspect for the first display in the list
+                    adlx_uint index = GPU;
+                    IADLXDisplayPtr display;
+                    res = displayList->At(index, &display);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        IADLXDisplayGPUScalingPtr gpuScaling;
+                        res = displayService->GetGPUScaling(display, &gpuScaling);
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            adlx_bool enabled = false;
+                            res = gpuScaling->IsEnabled(&enabled);
+                            return enabled;
+                        }
+                    }
+                }
+            }
+
+            // terminate ADLX
+            g_ADLXHelp.Terminate();
+        }
+
+        return result;
+    }
+
+    ADLX_DisplaySettings bool SetGPUScaling(int GPU, bool enabled)
+    {
+        // Define return code
+        ADLX_RESULT  res = ADLX_FAIL;
+        bool result = false;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get display service
+            IADLXDisplayServicesPtr displayService;
+            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
+            if (ADLX_SUCCEEDED(res))
+            {
+                // Get display list
+                IADLXDisplayListPtr displayList;
+                res = displayService->GetDisplays(&displayList);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Inspect for the first display in the list
+                    adlx_uint index = GPU;
+                    IADLXDisplayPtr display;
+                    res = displayList->At(index, &display);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        IADLXDisplayGPUScalingPtr gpuScaling;
+                        res = displayService->GetGPUScaling(display, &gpuScaling);
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            ADLX_RESULT res = gpuScaling->SetEnabled(enabled);
                             result = ADLX_SUCCEEDED(res);
                         }
                     }
