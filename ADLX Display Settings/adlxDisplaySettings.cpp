@@ -8,10 +8,11 @@ extern "C" {
     using namespace adlx;
     static ADLXHelper g_ADLXHelp;
 
-    ADLX_DisplaySettings bool HasIntegerScalingSupport()
+    ADLX_DisplaySettings bool HasIntegerScalingSupport(int GPU)
     {
         // Define return code
         ADLX_RESULT  res = ADLX_FAIL;
+        bool result = false;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
@@ -28,50 +29,35 @@ extern "C" {
                 if (ADLX_SUCCEEDED(res))
                 {
                     // Inspect for the first display in the list
-                    adlx_uint it = 0;
+                    adlx_uint index = GPU;
                     IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
+                    res = displayList->At(index, &display);
                     if (ADLX_SUCCEEDED(res))
                     {
                         IADLXDisplayIntegerScalingPtr displayIntegerScaling;
                         res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
                         if (ADLX_SUCCEEDED(res))
                         {
                             adlx_bool supported = false;
-                            res = displayIntegerScaling->IsSupported(&supported);
-                            return supported;
+                            displayIntegerScaling->IsSupported(&supported);
+                            result = supported;
                         }
-
-
                     }
                 }
-                else
-                {
-
-                }
             }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
 
-            }
-        }
-        else
-        {
-
+            // terminate ADLX
+            g_ADLXHelp.Terminate();
         }
 
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
+        return result;
     }
 
-    ADLX_DisplaySettings bool IsIntegerScalingEnabled()
+    ADLX_DisplaySettings bool GetIntegerScaling(int GPU)
     {
         // Define return code
         ADLX_RESULT  res = ADLX_FAIL;
+        bool result = false;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
@@ -88,9 +74,9 @@ extern "C" {
                 if (ADLX_SUCCEEDED(res))
                 {
                     // Inspect for the first display in the list
-                    adlx_uint it = 0;
+                    adlx_uint index = GPU;
                     IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
+                    res = displayList->At(index, &display);
                     if (ADLX_SUCCEEDED(res))
                     {
                         IADLXDisplayIntegerScalingPtr displayIntegerScaling;
@@ -98,39 +84,26 @@ extern "C" {
 
                         if (ADLX_SUCCEEDED(res))
                         {
-                            adlx_bool supported = false;
-                            res = displayIntegerScaling->IsSupported(&supported);
-                            return supported;
+                            adlx_bool enabled = false;
+                            res = displayIntegerScaling->IsEnabled(&enabled);
+                            return enabled;
                         }
-
-
                     }
                 }
-                else
-                {
-
-                }
             }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
 
-            }
-        }
-        else
-        {
-
+            // terminate ADLX
+            g_ADLXHelp.Terminate();
         }
 
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
+        return result;
     }
-    ADLX_DisplaySettings int SetIntegerScaling(const int key)
+
+    ADLX_DisplaySettings bool SetIntegerScaling(int GPU, bool enabled)
     {
         // Define return code
         ADLX_RESULT  res = ADLX_FAIL;
+        bool result = false;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
@@ -147,57 +120,26 @@ extern "C" {
                 if (ADLX_SUCCEEDED(res))
                 {
                     // Inspect for the first display in the list
-                    adlx_uint it = 0;
+                    adlx_uint index = GPU;
                     IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
+                    res = displayList->At(index, &display);
                     if (ADLX_SUCCEEDED(res))
                     {
                         IADLXDisplayIntegerScalingPtr displayIntegerScaling;
                         res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
                         if (ADLX_SUCCEEDED(res))
                         {
-                            res = ADLX_FAIL;
-                            switch (key)
-                            {
-                                // Set integer scaling disabled
-                            case 0:
-
-                                res = displayIntegerScaling->SetEnabled(false);
-                                break;
-                                // Set integer scaling enabled
-                            case 1:
-
-                                res = displayIntegerScaling->SetEnabled(true);
-                                break;
-                            default:
-                                break;
-                            }
-                            return res;
+                            ADLX_RESULT res = displayIntegerScaling->SetEnabled(enabled);
+                            result = ADLX_SUCCEEDED(res);
                         }
-
-
                     }
                 }
-                else
-                {
-
-                }
             }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
 
-            }
-        }
-        else
-        {
-
+            // terminate ADLX
+            g_ADLXHelp.Terminate();
         }
 
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
+        return result;
     }
 }
