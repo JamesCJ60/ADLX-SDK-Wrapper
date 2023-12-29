@@ -1,5 +1,5 @@
-#include "SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
-#include "SDK/Include/I3DSettings.h"
+#include "../SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
+#include "../SDK/Include/I3DSettings.h"
 
 #define ADLX_3DSettings _declspec(dllexport)
 

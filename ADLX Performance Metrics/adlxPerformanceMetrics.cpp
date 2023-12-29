@@ -1,5 +1,5 @@
-#include "SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
-#include "SDK/Include/IPerformanceMonitoring.h"
+#include "../SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
+#include "../SDK/Include/IPerformanceMonitoring.h"
 
 #define ADLX_PerformanceMetrics _declspec(dllexport)
 

@@ -6,9 +6,9 @@ set(project "ADLX_AutoTuning")
 
 set(all_file
   "adlxAutoTuning.cpp"
-  ${CMAKE_SOURCE_DIR}/SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h
-  ${CMAKE_SOURCE_DIR}//SDK/ADLXHelper/Windows/Cpp/ADLXHelper.cpp
-  ${CMAKE_SOURCE_DIR}/SDK/platform/Windows/WinAPIs.cpp
+  ${CMAKE_SOURCE_DIR}/../SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h
+  ${CMAKE_SOURCE_DIR}/../SDK/ADLXHelper/Windows/Cpp/ADLXHelper.cpp
+  ${CMAKE_SOURCE_DIR}/../SDK/platform/Windows/WinAPIs.cpp
  )
 
 

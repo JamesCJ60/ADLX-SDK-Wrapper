@@ -1,6 +1,6 @@
-#include "SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
-#include "SDK/Include/IDisplaySettings.h"
-#include "SDK/Include/IDisplays.h"
+#include "../SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
+#include "../SDK/Include/IDisplaySettings.h"
+#include "../SDK/Include/IDisplays.h"
 
 #define ADLX_DisplaySettings _declspec(dllexport)
 

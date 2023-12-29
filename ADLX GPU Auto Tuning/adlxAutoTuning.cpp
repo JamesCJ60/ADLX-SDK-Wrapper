@@ -1,6 +1,6 @@
-#include "SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
-#include "SDK/Include/IGPUAutoTuning.h"
-#include "SDK/Include/IGPUTuning.h"
+#include "../SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
+#include "../SDK/Include/IGPUAutoTuning.h"
+#include "../SDK/Include/IGPUTuning.h"
 #include <string>
 
 #define ADLX_AutoTuning _declspec(dllexport)
