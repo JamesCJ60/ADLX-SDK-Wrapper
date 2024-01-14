@@ -41,4 +41,5 @@ public const string ADLX_DisplaySettings = @"ADLX_DisplaySettings.dll";
 
 [DllImport(ADLX_DisplaySettings, CallingConvention = CallingConvention.Cdecl)] public static extern bool HasScalingModeSupport(int GPU);
 [DllImport(ADLX_DisplaySettings, CallingConvention = CallingConvention.Cdecl)] public static extern int GetScalingMode(int GPU);
-[DllImport(ADLX_DisplaySettings, CallingConvention = CallingConvention.Cdecl)] public static extern bool SetScalingMode(int GPU, int mode);```
+[DllImport(ADLX_DisplaySettings, CallingConvention = CallingConvention.Cdecl)] public static extern bool SetScalingMode(int GPU, int mode);
+```
