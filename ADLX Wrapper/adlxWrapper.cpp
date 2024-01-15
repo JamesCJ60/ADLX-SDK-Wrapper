@@ -74,7 +74,7 @@ extern "C" {
     ADLX_Wrapper bool HasIntegerScalingSupport(int GPU)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -111,7 +111,7 @@ extern "C" {
     ADLX_Wrapper bool GetIntegerScaling(int GPU)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -148,7 +148,7 @@ extern "C" {
     ADLX_Wrapper bool SetIntegerScaling(int GPU, bool enabled)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -184,7 +184,7 @@ extern "C" {
     ADLX_Wrapper bool HasGPUScalingSupport(int GPU)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -221,7 +221,7 @@ extern "C" {
     ADLX_Wrapper bool GetGPUScaling(int GPU)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -258,7 +258,7 @@ extern "C" {
     ADLX_Wrapper bool SetGPUScaling(int GPU, bool enabled)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -294,7 +294,7 @@ extern "C" {
     ADLX_Wrapper bool HasScalingModeSupport(int GPU)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -331,7 +331,7 @@ extern "C" {
     ADLX_Wrapper int GetScalingMode(int GPU)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         int result = -1;
 
         // Get display service
@@ -368,7 +368,7 @@ extern "C" {
     ADLX_Wrapper bool SetScalingMode(int GPU, int mode)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
         bool result = false;
 
         // Get display service
@@ -1386,36 +1386,41 @@ extern "C" {
         IADLXGPUMetricsPtr gpuMetrics;
         IADLXPerformanceMonitoringServicesPtr perfMonitoringService;
 
-        // Get GPUs
-        IADLXGPUListPtr gpus;
-        res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
-        if (ADLX_SUCCEEDED(res) && !gpus->Empty())
+        // Get Performance Monitoring services
+         res = g_ADLXHelp.GetSystemServices()->GetPerformanceMonitoringServices(&perfMonitoringService);
+        if (ADLX_SUCCEEDED(res))
         {
-            // Get GPU interface
-            IADLXGPUPtr gpuInfo;
-            adlx_uint index = GPU;
-            res = gpus->At(index, &gpuInfo);
-            if (ADLX_SUCCEEDED(res))
+            // Get GPUs
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res) && !gpus->Empty())
             {
-                ADLX_RESULT res1 = perfMonitoringService->GetSupportedGPUMetrics(gpuInfo, &gpuMetricsSupport);
-                ADLX_RESULT res2 = perfMonitoringService->GetCurrentGPUMetrics(gpuInfo, &gpuMetrics);
-
-                // Display timestamp and GPU metrics
-                if (ADLX_SUCCEEDED(res1) && ADLX_SUCCEEDED(res2))
+                // Get GPU interface
+                IADLXGPUPtr gpuInfo;
+                adlx_uint index = GPU;
+                res = gpus->At(index, &gpuInfo);
+                if (ADLX_SUCCEEDED(res))
                 {
-                    GetTimeStamp(gpuMetrics);
-                    GetGPUUsage(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUClockSpeed(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUVRAMClockSpeed(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUTemperature(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUHotspotTemperature(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUPower(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUFanSpeed(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUVRAM(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUVoltage(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
-                    GetGPUTotalBoardPower(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                    ADLX_RESULT res1 = perfMonitoringService->GetSupportedGPUMetrics(gpuInfo, &gpuMetricsSupport);
+                    ADLX_RESULT res2 = perfMonitoringService->GetCurrentGPUMetrics(gpuInfo, &gpuMetrics);
 
-                    check = true;
+                    // Display timestamp and GPU metrics
+                    if (ADLX_SUCCEEDED(res1) && ADLX_SUCCEEDED(res2))
+                    {
+                        GetTimeStamp(gpuMetrics);
+                        GetGPUUsage(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUClockSpeed(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUVRAMClockSpeed(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUTemperature(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUHotspotTemperature(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUPower(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUFanSpeed(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUVRAM(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUVoltage(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+                        GetGPUTotalBoardPower(gpuMetricsSupport, gpuMetrics, adlxTelemetryData);
+
+                        check = true;
+                    }
                 }
             }
         }
