@@ -2,6 +2,9 @@
 #include "../SDK/Include/I3DSettings.h"
 #include "../SDK/Include/IDisplaySettings.h"
 #include "../SDK/Include/IDisplays.h"
+#include "../SDK/Include/IGPUTuning.h"
+#include "../SDK/Include/IGPUPresetTuning.h"
+#include "../SDK/Include/IGPUManualGFXTuning.h"
 #include "../SDK/Include/IPerformanceMonitoring.h"
 
 #define ADLX_Wrapper _declspec(dllexport)
@@ -1201,6 +1204,130 @@ extern "C" {
                     telemetryData->gpuUsageValue = usage;
             }
         }
+    }
+
+    ADLX_Wrapper bool HasPresetTuningSupport(int GPU)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+        bool result = false;
+
+        IADLXGPUTuningServicesPtr gpuTuningService;
+        res = g_ADLXHelp.GetSystemServices()->GetGPUTuningServices(&gpuTuningService);
+        if (ADLX_SUCCEEDED(res))
+        {
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res))
+            {
+                IADLXGPUPtr oneGPU;
+                res = gpus->At(GPU, &oneGPU);
+                if (ADLX_SUCCEEDED(res) && oneGPU != nullptr)
+                {
+                    adlx_bool supported = false;
+                    gpuTuningService->IsSupportedPresetTuning(oneGPU, &supported);
+                    result = supported;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    ADLX_Wrapper ADLX_RESULT GetGPUFrequency(int GPU, int* minFreq, int* maxFreq)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        IADLXGPUTuningServicesPtr gpuTuningService;
+        res = g_ADLXHelp.GetSystemServices()->GetGPUTuningServices(&gpuTuningService);
+        if (ADLX_SUCCEEDED(res))
+        {
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res))
+            {
+                IADLXGPUPtr oneGPU;
+                res = gpus->At(0, &oneGPU);
+                if (ADLX_SUCCEEDED(res) && oneGPU != nullptr)
+                {
+                    adlx_bool supported = false;
+                    res = gpuTuningService->IsSupportedPresetTuning(oneGPU, &supported);
+                    if (ADLX_SUCCEEDED(res) && supported)
+                    {
+                        IADLXInterfacePtr gpuPresetTuningIfc;
+                        res = gpuTuningService->GetPresetTuning(oneGPU, &gpuPresetTuningIfc);
+                        if (ADLX_SUCCEEDED(res) && gpuPresetTuningIfc != nullptr)
+                        {
+                            IADLXGPUPresetTuningPtr gpuPresetTuning(gpuPresetTuningIfc);
+                            if (gpuPresetTuning != nullptr)
+                            {
+                                IADLXInterfacePtr manualGFXTuningIfc;
+                                res = gpuTuningService->GetManualGFXTuning(oneGPU, &manualGFXTuningIfc);
+
+                                // Post-Navi ASIC
+                                IADLXManualGraphicsTuning2Ptr manualGFXTuning2(manualGFXTuningIfc);
+                                if (manualGFXTuning2 != nullptr)
+                                {
+                                    res = manualGFXTuning2->GetGPUMinFrequency(minFreq);
+                                    res = manualGFXTuning2->GetGPUMaxFrequency(maxFreq);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+
+    ADLX_Wrapper ADLX_RESULT SetGPUFrequency(int GPU, int minFreq, int maxFreq)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        IADLXGPUTuningServicesPtr gpuTuningService;
+        res = g_ADLXHelp.GetSystemServices()->GetGPUTuningServices(&gpuTuningService);
+        if (ADLX_SUCCEEDED(res))
+        {
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res))
+            {
+                IADLXGPUPtr oneGPU;
+                res = gpus->At(0, &oneGPU);
+                if (ADLX_SUCCEEDED(res) && oneGPU != nullptr)
+                {
+                    adlx_bool supported = false;
+                    res = gpuTuningService->IsSupportedPresetTuning(oneGPU, &supported);
+                    if (ADLX_SUCCEEDED(res) && supported)
+                    {
+                        IADLXInterfacePtr gpuPresetTuningIfc;
+                        res = gpuTuningService->GetPresetTuning(oneGPU, &gpuPresetTuningIfc);
+                        if (ADLX_SUCCEEDED(res) && gpuPresetTuningIfc != nullptr)
+                        {
+                            IADLXGPUPresetTuningPtr gpuPresetTuning(gpuPresetTuningIfc);
+                            if (gpuPresetTuning != nullptr)
+                            {
+                                IADLXInterfacePtr manualGFXTuningIfc;
+                                res = gpuTuningService->GetManualGFXTuning(oneGPU, &manualGFXTuningIfc);
+
+                                // Post-Navi ASIC
+                                IADLXManualGraphicsTuning2Ptr manualGFXTuning2(manualGFXTuningIfc);
+                                if (manualGFXTuning2 != nullptr)
+                                {
+                                    res = manualGFXTuning2->SetGPUMinFrequency(minFreq);
+                                    res = manualGFXTuning2->SetGPUMaxFrequency(maxFreq);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return res;
     }
 
     // Set GPU clock speed (in MHz)
