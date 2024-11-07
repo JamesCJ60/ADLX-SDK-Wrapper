@@ -32,6 +32,7 @@ public static class ADLX_Management
 
   [DllImport(CppFunctionsDLL2, CallingConvention = CallingConvention.Cdecl)] public static extern int GetFactoryStatus(int GPU);
 
+  //int GPU is just the index of the GPU, default should be 0 unless you are running an egpu and want to set that, in which case it would be 1
   [DllImport(CppFunctionsDLL3, CallingConvention = CallingConvention.Cdecl)] public static extern bool SetFPSLimit(int GPU, bool isEnabled, int FPS);
   [DllImport(CppFunctionsDLL3, CallingConvention = CallingConvention.Cdecl)] public static extern bool IsFPSLimitEnabled(int GPU);
   [DllImport(CppFunctionsDLL3, CallingConvention = CallingConvention.Cdecl)] public static extern bool HasFPSLimitSupport(int GPU);
