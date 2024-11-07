@@ -46,7 +46,7 @@ extern "C" {
                             res = displayIntegerScaling->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
 
                                 return supported;
                             }
@@ -62,7 +62,7 @@ extern "C" {
         }
       
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsIntegerScalingEnabled1()
@@ -100,7 +100,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
 
                                 return enabled;
                             }
@@ -114,7 +114,7 @@ extern "C" {
             }
            
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -153,7 +153,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res)) 
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                            
@@ -168,7 +168,7 @@ extern "C" {
         }
     
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -207,7 +207,7 @@ extern "C" {
                             res = displayIntegerScaling->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
 
                                 return supported;
                             }
@@ -223,7 +223,7 @@ extern "C" {
         }
 
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsIntegerScalingEnabled2()
@@ -261,7 +261,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
 
                                 return enabled;
                             }
@@ -275,7 +275,7 @@ extern "C" {
             }
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -314,7 +314,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
 
@@ -329,7 +329,7 @@ extern "C" {
         }
 
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -370,7 +370,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
               
@@ -383,7 +383,7 @@ extern "C" {
            
         }
        
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsGPUScalingEnabled1()
@@ -420,7 +420,7 @@ extern "C" {
                             res = displayGPUScaling->IsEnabled(&enabled);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
              
@@ -434,7 +434,7 @@ extern "C" {
         }
 
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool SetGPUScaling1(bool isEnabled)
@@ -471,7 +471,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -486,7 +486,7 @@ extern "C" {
         }
 
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -528,7 +528,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
 
@@ -541,7 +541,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsGPUScalingEnabled2()
@@ -578,7 +578,7 @@ extern "C" {
                             res = displayGPUScaling->IsEnabled(&enabled);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
 
@@ -592,7 +592,7 @@ extern "C" {
         }
 
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool SetGPUScaling2(bool isEnabled)
@@ -629,7 +629,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -644,7 +644,7 @@ extern "C" {
         }
 
         // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -684,7 +684,7 @@ extern "C" {
                             res = displayScalingMode->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
                   
@@ -698,7 +698,7 @@ extern "C" {
           
         }
       
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings int GetScalingMode1()
@@ -736,7 +736,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return sm;
                             }
                      
@@ -749,7 +749,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return -1;
 
 
@@ -807,7 +807,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -820,7 +820,7 @@ extern "C" {
        
         }
   
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -860,7 +860,7 @@ extern "C" {
                             res = displayScalingMode->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
 
@@ -874,7 +874,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings int GetScalingMode2()
@@ -912,7 +912,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return sm;
                             }
 
@@ -925,7 +925,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return -1;
 
 
@@ -983,7 +983,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -996,7 +996,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -1039,7 +1039,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
                         }
@@ -1053,7 +1053,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1102,7 +1102,7 @@ extern "C" {
 
                                     if (ADLX_SUCCEEDED(res))
                                     {
-                                        res = g_ADLXHelp.Terminate();
+                                        
                                         return enabled;
                                     }
 
@@ -1121,7 +1121,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -1170,7 +1170,7 @@ extern "C" {
 
                                     if (ADLX_SUCCEEDED(res))
                                     {
-                                        res = g_ADLXHelp.Terminate();
+                                        
                                         return true;
                                     }
                                 }
@@ -1183,7 +1183,7 @@ extern "C" {
   
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1225,7 +1225,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
                         }
@@ -1239,7 +1239,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1288,7 +1288,7 @@ extern "C" {
 
                                     if (ADLX_SUCCEEDED(res))
                                     {
-                                        res = g_ADLXHelp.Terminate();
+                                        
                                         return enabled;
                                     }
 
@@ -1307,7 +1307,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -1356,7 +1356,7 @@ extern "C" {
 
                                     if (ADLX_SUCCEEDED(res))
                                     {
-                                        res = g_ADLXHelp.Terminate();
+                                        
                                         return true;
                                     }
 
@@ -1388,7 +1388,7 @@ extern "C" {
         {
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1426,7 +1426,7 @@ extern "C" {
                             res = displayVSR->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
                         }
@@ -1435,7 +1435,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsVSREnabled1()
@@ -1472,7 +1472,7 @@ extern "C" {
                             res = displayVSR->IsEnabled(&enabled);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
       
@@ -1484,7 +1484,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1526,7 +1526,7 @@ extern "C" {
 
                                 if (ADLX_SUCCEEDED(res))
                                 {
-                                    res = g_ADLXHelp.Terminate();
+                                    
                                     return true;
                                 }
 
@@ -1539,7 +1539,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1577,7 +1577,7 @@ extern "C" {
                             res = displayVSR->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
                         }
@@ -1586,7 +1586,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsVSREnabled2()
@@ -1623,7 +1623,7 @@ extern "C" {
                             res = displayVSR->IsEnabled(&enabled);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
 
@@ -1635,7 +1635,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1677,7 +1677,7 @@ extern "C" {
 
                                 if (ADLX_SUCCEEDED(res))
                                 {
-                                    res = g_ADLXHelp.Terminate();
+                                    
                                     return true;
                                 }
 
@@ -1690,7 +1690,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1729,7 +1729,7 @@ extern "C" {
                             res = displayVariBright->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
                          
@@ -1740,7 +1740,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsVariBrightEnabled1()
@@ -1777,7 +1777,7 @@ extern "C" {
                             res = displayVariBright->IsEnabled(&enabled);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
                             
@@ -1791,7 +1791,7 @@ extern "C" {
          
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -1830,32 +1830,32 @@ extern "C" {
                             res = displayVariBright->IsCurrentMaximizeBrightness(&applied);
                             if (applied) 
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 0;
                             }
 
                             res = displayVariBright->IsCurrentOptimizeBrightness(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 1;
                             }
                             res = displayVariBright->IsCurrentBalanced(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 2;
                             }
                             res = displayVariBright->IsCurrentOptimizeBattery(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 3;
                             }
                             res = displayVariBright->IsCurrentMaximizeBattery(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 4;
                             }
 
@@ -1868,7 +1868,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return -1;
 
 
@@ -1935,7 +1935,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res)) 
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -1947,7 +1947,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -1987,7 +1987,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -1999,7 +1999,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -2040,7 +2040,7 @@ extern "C" {
                             res = displayVariBright->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
 
@@ -2051,7 +2051,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_DisplaySettings bool IsVariBrightEnabled2()
@@ -2088,7 +2088,7 @@ extern "C" {
                             res = displayVariBright->IsEnabled(&enabled);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
 
@@ -2102,7 +2102,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
     }
@@ -2144,32 +2144,32 @@ extern "C" {
                             res = displayVariBright->IsCurrentMaximizeBrightness(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 0;
                             }
 
                             res = displayVariBright->IsCurrentOptimizeBrightness(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 1;
                             }
                             res = displayVariBright->IsCurrentBalanced(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 2;
                             }
                             res = displayVariBright->IsCurrentOptimizeBattery(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 3;
                             }
                             res = displayVariBright->IsCurrentMaximizeBattery(&applied);
                             if (applied)
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return 4;
                             }
 
@@ -2182,7 +2182,7 @@ extern "C" {
             }
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return -1;
 
 
@@ -2249,7 +2249,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -2261,7 +2261,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
@@ -2301,7 +2301,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -2313,7 +2313,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return false;
 
 
