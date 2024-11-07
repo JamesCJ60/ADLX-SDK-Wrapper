@@ -1,2022 +1,673 @@
 #include "SDK/ADLXHelper/Windows/Cpp/ADLXHelper.h"
-#include "SDK/Include/IDisplaySettings.h"
-#include "SDK/Include/IDisplays.h"
-#include <iostream>
-#include <string>
-#include "SDK/Include/I3DSettings1.h"
 #include "SDK/Include/I3DSettings.h"
+#include "SDK/Include/I3DSettings1.h"
 
-#define ADLX_DisplaySettings _declspec(dllexport)
+#define ADLX_3DSettings _declspec(dllexport)
 
 extern "C" {
     using namespace adlx;
     static ADLXHelper g_ADLXHelp;
 
-    ADLX_DisplaySettings bool HasIntegerScalingSupport1()
+    ADLX_3DSettings bool SetRSRSharpness(int sharpness)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL ;
+        ADLX_RESULT res = ADLX_FAIL;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED (res))
+        if (ADLX_SUCCEEDED(res))
         {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED (res))
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+            if (ADLX_SUCCEEDED(res))
             {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED  (res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED (res))
-                    {
-                        IADLXDisplayIntegerScalingPtr displayIntegerScaling;
-                        res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
 
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        // Get RadeonSuperResolution interface
+                        IADLX3DRadeonSuperResolutionPtr rsr;
+                        res = d3dSettingSrv->GetRadeonSuperResolution(&rsr);
                         if (ADLX_SUCCEEDED(res))
                         {
                             adlx_bool supported = false;
-                            res = displayIntegerScaling->IsSupported(&supported);
-                            return supported;
-                        }
+                            rsr->IsSupported(&supported);
 
-                        
-                    }
-                }
-                else
-                {
-                    
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate ();
-              
-            }
-        }
-        else
-        {
-           
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-      
-    }
-    ADLX_DisplaySettings bool IsIntegerScalingEnabled1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL ;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED (res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED (res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED  (res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED (res))
-                    {
-                        IADLXDisplayIntegerScalingPtr displayIntegerScaling;
-                        res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            adlx_bool supported = false;
-                            res = displayIntegerScaling->IsEnabled(&supported);
-                            return supported;
-                        }
-
-                        
-                    }
-                }
-                else
-                {
-                    
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate ();
-              
-            }
-        }
-        else
-        {
-           
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-      
-    }
-    ADLX_DisplaySettings int SetIntegerScaling1(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL ;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED (res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED (res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED  (res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED (res))
-                    {
-                        IADLXDisplayIntegerScalingPtr displayIntegerScaling;
-                        res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            res = ADLX_FAIL;
-                            switch (key)
+                            if (supported)
                             {
-                                // Set integer scaling disabled
-                            case 0:
-                              
-                                res = displayIntegerScaling->SetEnabled(false);
-                                break;
-                                // Set integer scaling enabled
-                            case 1:
-                              
-                                res = displayIntegerScaling->SetEnabled(true);
-                                break;
-                            default:
-                                break;
-                            }
-                            return res;
-                        }
-
-                        
-                    }
-                }
-                else
-                {
-                    
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate ();
-              
-            }
-        }
-        else
-        {
-           
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-      
-    }
-
-    ADLX_DisplaySettings bool HasIntegerScalingSupport2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayIntegerScalingPtr displayIntegerScaling;
-                        res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            adlx_bool supported = false;
-                            res = displayIntegerScaling->IsSupported(&supported);
-                            return supported;
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
-
-            }
-        }
-        else
-        {
-
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
-    }
-    ADLX_DisplaySettings bool IsIntegerScalingEnabled2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayIntegerScalingPtr displayIntegerScaling;
-                        res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            adlx_bool supported = false;
-                            res = displayIntegerScaling->IsEnabled(&supported);
-                            return supported;
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
-
-            }
-        }
-        else
-        {
-
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
-    }
-    ADLX_DisplaySettings int SetIntegerScaling2(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayIntegerScalingPtr displayIntegerScaling;
-                        res = displayService->GetIntegerScaling(display, &displayIntegerScaling);
-
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            res = ADLX_FAIL;
-                            switch (key)
-                            {
-                                // Set integer scaling disabled
-                            case 0:
-
-                                res = displayIntegerScaling->SetEnabled(false);
-                                break;
-                                // Set integer scaling enabled
-                            case 1:
-
-                                res = displayIntegerScaling->SetEnabled(true);
-                                break;
-                            default:
-                                break;
-                            }
-                            return res;
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
-
-            }
-        }
-        else
-        {
-
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
-    }
-
-
-    ADLX_DisplaySettings bool HasGPUScalingSupport1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-
-                        IADLXDisplayGPUScalingPtr displayGPUScaling;
-                        ADLX_RESULT  res = displayService->GetGPUScaling(display, &displayGPUScaling);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                  
-                            adlx_bool supported = false;
-                            res = displayGPUScaling->IsSupported(&supported);
-                
-                            return supported;
-                        }
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-    }
-    ADLX_DisplaySettings bool IsGPUScalingEnabled1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayGPUScalingPtr displayGPUScaling;
-                        ADLX_RESULT  res = displayService->GetGPUScaling(display, &displayGPUScaling);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                          
-                            adlx_bool enabled = false;
-                            res = displayGPUScaling->IsEnabled(&enabled);
-                            return enabled;
-                        }
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
-
-            }
-        }
-        else
-        {
-
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
-    }
-    ADLX_DisplaySettings int SetGPUScaling1(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayGPUScalingPtr displayGPUScaling;
-                        ADLX_RESULT res = displayService->GetGPUScaling(display, &displayGPUScaling);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            ADLX_RESULT  res = ADLX_FAIL;
-                            switch (key)
-                            {
-                                // Set GPUScaling disabled
-                            case 0:
-                               
-                                res = displayGPUScaling->SetEnabled(false);
-                                break;
-                                // Set GPUScaling enabled
-                            case 1:
-                         
-                                res = displayGPUScaling->SetEnabled(true);
-                                break;
-                            default:
-                                break;
-                            }
-                            return res;
-                        }
-
-                      
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-              
-
-            }
-        }
-        else
-        {
-
-        }
-
-
-    }
-
-    ADLX_DisplaySettings bool HasGPUScalingSupport2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-
-                        IADLXDisplayGPUScalingPtr displayGPUScaling;
-                        ADLX_RESULT  res = displayService->GetGPUScaling(display, &displayGPUScaling);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-
-                            adlx_bool supported = false;
-                            res = displayGPUScaling->IsSupported(&supported);
-
-                            return supported;
-                        }
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-    }
-    
-    ADLX_DisplaySettings bool IsGPUScalingEnabled2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayGPUScalingPtr displayGPUScaling;
-                        ADLX_RESULT  res = displayService->GetGPUScaling(display, &displayGPUScaling);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-
-                            adlx_bool enabled = false;
-                            res = displayGPUScaling->IsEnabled(&enabled);
-                            return enabled;
-                        }
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                // Destroy ADLX
-                res = g_ADLXHelp.Terminate();
-
-            }
-        }
-        else
-        {
-
-        }
-
-        // Destroy ADLX
-        res = g_ADLXHelp.Terminate();
-
-    }
-    ADLX_DisplaySettings int SetGPUScaling2(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayGPUScalingPtr displayGPUScaling;
-                        ADLX_RESULT res = displayService->GetGPUScaling(display, &displayGPUScaling);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            ADLX_RESULT  res = ADLX_FAIL;
-                            switch (key)
-                            {
-                                // Set GPUScaling disabled
-                            case 0:
-
-                                res = displayGPUScaling->SetEnabled(false);
-                                break;
-                                // Set GPUScaling enabled
-                            case 1:
-
-                                res = displayGPUScaling->SetEnabled(true);
-                                break;
-                            default:
-                                break;
-                            }
-                            return res;
-                        }
-
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-
-    }
-
-    ADLX_DisplaySettings bool HasScalingModeSupport1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayScalingModePtr displayScalingMode;
-                        ADLX_RESULT  res = displayService->GetScalingMode(display, &displayScalingMode);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                          
-                            adlx_bool supported = false;
-                            res = displayScalingMode->IsSupported(&supported);
-                            return supported;
-                        }
-                       
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-    }
-    ADLX_DisplaySettings int GetScalingMode1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayScalingModePtr displayScalingMode;
-                        ADLX_RESULT  res = displayService->GetScalingMode(display, &displayScalingMode);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            std::cout << "  === Get ScalingMode Enabled ===" << std::endl;
-                            ADLX_SCALE_MODE  sm = PRESERVE_ASPECT_RATIO;
-                            res = displayScalingMode->GetMode(&sm);
-                            return sm;
-                        }
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-              
-
-            }
-        }
-        else
-        {
-
-        }
-
-      
-
-    }
-    ADLX_DisplaySettings int SetScalingMode1(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayScalingModePtr displayScalingMode;
-                        ADLX_RESULT  res = displayService->GetScalingMode(display, &displayScalingMode);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            ADLX_RESULT  res = ADLX_FAIL;
-                            switch (key)
-                            {
-                                // Set scaling mode to PRESERVE_ASPECT_RATIO
-                            case 0:
-        
-                                res = displayScalingMode->SetMode(PRESERVE_ASPECT_RATIO);
-                                break;
-                                // Set scaling mode to FULL_PANEL
-                            case 1:
-                
-                                res = displayScalingMode->SetMode(FULL_PANEL);
-                                break;
-                                // Set scaling mode to CENTERED
-                            case 2:
-                       
-                                res = displayScalingMode->SetMode(CENTERED);
-                                break;
-                            default:
-                                break;
-                            }
-                           
-                        }
-                        return res;
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-               
-
-            }
-        }
-        else
-        {
-
-        }
-
-       
-
-    }
-
-    ADLX_DisplaySettings bool HasScalingModeSupport2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayScalingModePtr displayScalingMode;
-                        ADLX_RESULT  res = displayService->GetScalingMode(display, &displayScalingMode);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-
-                            adlx_bool supported = false;
-                            res = displayScalingMode->IsSupported(&supported);
-                            return supported;
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-    }
-    ADLX_DisplaySettings int GetScalingMode2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayScalingModePtr displayScalingMode;
-                        ADLX_RESULT  res = displayService->GetScalingMode(display, &displayScalingMode);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            std::cout << "  === Get ScalingMode Enabled ===" << std::endl;
-                            ADLX_SCALE_MODE  sm = PRESERVE_ASPECT_RATIO;
-                            res = displayScalingMode->GetMode(&sm);
-                            return sm;
-                        }
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-
-
-    }
-    ADLX_DisplaySettings int SetScalingMode2(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayScalingModePtr displayScalingMode;
-                        ADLX_RESULT  res = displayService->GetScalingMode(display, &displayScalingMode);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            ADLX_RESULT  res = ADLX_FAIL;
-                            switch (key)
-                            {
-                                // Set scaling mode to PRESERVE_ASPECT_RATIO
-                            case 0:
-
-                                res = displayScalingMode->SetMode(PRESERVE_ASPECT_RATIO);
-                                break;
-                                // Set scaling mode to FULL_PANEL
-                            case 1:
-
-                                res = displayScalingMode->SetMode(FULL_PANEL);
-                                break;
-                                // Set scaling mode to CENTERED
-                            case 2:
-
-                                res = displayScalingMode->SetMode(CENTERED);
-                                break;
-                            default:
-                                break;
-                            }
-
-                        }
-                        return res;
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-
-
-    }
-
-
-    ADLX_DisplaySettings bool HasFreeSyncSupport1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-
-                        IADLXDisplayFreeSyncPtr displayFreeSync;
-
-                        ADLX_RESULT res = displayService->GetFreeSync(display, &displayFreeSync);
-
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            adlx_bool supported = false;
-                            res = displayFreeSync->IsSupported(&supported);
-
-                            if (ADLX_SUCCEEDED(res))
-                            {
-                                return supported;
-                            }
-                        }
-
-                    }
-
-
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-      
-    }
-    ADLX_DisplaySettings bool IsFreeSyncEnabled1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-
-                        IADLXDisplayFreeSyncPtr displayFreeSync;
-
-                        res = displayService->GetFreeSync(display, &displayFreeSync);
-
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            adlx_bool supported = false;
-                            res = displayFreeSync->IsSupported(&supported);
-
-                            if (ADLX_SUCCEEDED(res))
-                            {
-                                if (supported) 
+                                rsr->SetSharpness(sharpness);
+                                if (ADLX_SUCCEEDED(res))
                                 {
-                                    adlx_bool enabled = false;
-
-                                    res = displayFreeSync->IsEnabled(&enabled);
-
-                                    if (ADLX_SUCCEEDED(res))
-                                    {
-                                        return enabled;
-                                    }
-
+                                    res = g_ADLXHelp.Terminate();
+                                    return true;
                                 }
-
+                                
+                              
                             }
-
                             
                         }
 
                     }
-
-
-
-             
+                   
                 }
-                else
-                {
-
-                }
+               
             }
-            else
-            {
-
-
-            }
+           
         }
-        else
-        {
-
-        }
-
+        res = g_ADLXHelp.Terminate();
         return false;
-
-      
     }
-    ADLX_DisplaySettings bool SetFreeSync1(const int key)
+    ADLX_3DSettings int GetRSRSharpness()
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
         if (ADLX_SUCCEEDED(res))
         {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
             if (ADLX_SUCCEEDED(res))
             {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
+
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
                 if (ADLX_SUCCEEDED(res))
                 {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
                     if (ADLX_SUCCEEDED(res))
                     {
-
-                        IADLXDisplayFreeSyncPtr displayFreeSync;
-
-                        ADLX_RESULT res = displayService->GetFreeSync(display, &displayFreeSync);
-
+                        // Get RadeonSuperResolution interface
+                        IADLX3DRadeonSuperResolutionPtr rsr;
+                        res = d3dSettingSrv->GetRadeonSuperResolution(&rsr);
                         if (ADLX_SUCCEEDED(res))
                         {
                             adlx_bool supported = false;
-                            res = displayFreeSync->IsSupported(&supported);
+                            rsr->IsSupported(&supported);
 
-                            if (ADLX_SUCCEEDED(res))
+                            if (supported)
                             {
-                                if (supported)
+                                adlx_int sharpness;
+                                ADLX_IntRange  sharpnessRange;
+                                rsr->GetSharpness(&sharpness);
+
+                                if (ADLX_SUCCEEDED(res))
                                 {
-                                    res = ADLX_FAIL;
-                                    switch (key)
-                                    {
-                                        // Set freesync disabled
-                                    case 0:
-
-                                        res = displayFreeSync->SetEnabled(false);
-                                        return true;
-                                        break;
-                                        // Set freesync enabled
-                                    case 1:
-
-                                        res = displayFreeSync->SetEnabled(true);
-                                        return true;
-                                        break;
-                                    default:
-                                        break;
-                                    }
-
-                                  
-                                   
-
+                                    res = g_ADLXHelp.Terminate();
+                                    return sharpness;
                                 }
 
                             }
-
-
+                           
                         }
+
+                    }
+                }
+
+            }
+
+        }
+
+        res = g_ADLXHelp.Terminate();
+        return -1;
+    }
+    ADLX_3DSettings bool HasRSRSupport()
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+            if (ADLX_SUCCEEDED(res))
+            {
+
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Get RadeonSuperResolution interface
+                    IADLX3DRadeonSuperResolutionPtr rsr;
+                    res = d3dSettingSrv->GetRadeonSuperResolution(&rsr);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        adlx_bool supported = false;
+                        rsr->IsSupported(&supported);
+
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            res = g_ADLXHelp.Terminate();
+                            return supported;
+                        }
+
 
                     }
 
 
                 }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
 
             }
-        }
-        else
-        {
 
         }
-
+        res = g_ADLXHelp.Terminate();
         return false;
-
     }
-    ADLX_DisplaySettings bool HasFreeSyncSupport2()
+    ADLX_3DSettings bool GetRSRState()
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
         if (ADLX_SUCCEEDED(res))
         {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
             if (ADLX_SUCCEEDED(res))
             {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
+
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
                 if (ADLX_SUCCEEDED(res))
                 {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
+                    // Get RadeonSuperResolution interface
+                    IADLX3DRadeonSuperResolutionPtr rsr;
+                    res = d3dSettingSrv->GetRadeonSuperResolution(&rsr);
                     if (ADLX_SUCCEEDED(res))
                     {
+                        adlx_bool supported = false;
+                        rsr->IsSupported(&supported);
 
-                        IADLXDisplayFreeSyncPtr displayFreeSync;
+                        if (supported)
+                        {
+                            adlx_bool enabled = false;
+                            rsr->IsEnabled(&enabled);
+                            if (ADLX_SUCCEEDED(res))
+                            {
+                                res = g_ADLXHelp.Terminate();
+                                return enabled;
+                            }
 
-                        ADLX_RESULT res = displayService->GetFreeSync(display, &displayFreeSync);
+                        }
 
+                    }
+
+                }
+
+            }
+
+        }
+        res = g_ADLXHelp.Terminate();
+        return false;
+    }
+    ADLX_3DSettings bool SetRSR(bool isEnabled)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+            if (ADLX_SUCCEEDED(res))
+            {
+
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        // Get RadeonSuperResolution interface
+                        IADLX3DRadeonSuperResolutionPtr rsr;
+                        res = d3dSettingSrv->GetRadeonSuperResolution(&rsr);
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            ADLX_RESULT  res = rsr->SetEnabled(isEnabled);
+                          
+                            if (ADLX_SUCCEEDED(res))
+                            {
+                                res = g_ADLXHelp.Terminate();
+                                return true;
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+        res = g_ADLXHelp.Terminate();
+        return false;
+    }
+    ADLX_3DSettings bool MadeByProjectSBC()
+    {
+        return true;
+    }
+
+    ADLX_3DSettings bool HasFPSLimitSupport(int GPU)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get GPUs
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res) && !gpus->Empty())
+            {
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Get GPU interface
+                    IADLXGPUPtr gpuInfo;
+                    adlx_uint index = GPU;
+                    res = gpus->At(index, &gpuInfo);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        // Get FRTC interface
+                        IADLX3DFrameRateTargetControlPtr frtc;
+                        res = d3dSettingSrv->GetFrameRateTargetControl(gpuInfo, &frtc);
                         if (ADLX_SUCCEEDED(res))
                         {
                             adlx_bool supported = false;
-                            res = displayFreeSync->IsSupported(&supported);
+                            ADLX_RESULT  res = frtc->IsSupported(&supported);
 
+
+
+                            if (ADLX_SUCCEEDED(res))
+                            {
+                                res = g_ADLXHelp.Terminate();
+                                return supported;
+                            }
+
+                        }
+                    }
+                    
+                }
+             
+            }
+          
+        }
+        res = g_ADLXHelp.Terminate();
+        return false;
+    }
+    ADLX_3DSettings bool IsFPSLimitEnabled(int GPU)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get GPUs
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res) && !gpus->Empty())
+            {
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Get GPU interface
+                    IADLXGPUPtr gpuInfo;
+                    adlx_uint index = GPU;
+                    res = gpus->At(index, &gpuInfo);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        // Get FRTC interface
+                        IADLX3DFrameRateTargetControlPtr frtc;
+                        res = d3dSettingSrv->GetFrameRateTargetControl(gpuInfo, &frtc);
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            adlx_bool enabled = false;
+                            ADLX_RESULT  res = frtc->IsEnabled(&enabled);
+
+
+
+                            if (ADLX_SUCCEEDED(res))
+                            {
+                                res = g_ADLXHelp.Terminate();
+                                return enabled;
+                            }
+
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+        res = g_ADLXHelp.Terminate();
+        return false;
+    }
+    ADLX_3DSettings bool SetFPSLimit(int GPU, bool isEnabled, int FPS)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get GPUs
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res) && !gpus->Empty())
+            {
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Get GPU interface
+                    IADLXGPUPtr gpuInfo;
+                    adlx_uint index = GPU;
+                    res = gpus->At(index, &gpuInfo);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        // Get FRTC interface
+                        IADLX3DFrameRateTargetControlPtr frtc;
+                        res = d3dSettingSrv->GetFrameRateTargetControl(gpuInfo, &frtc);
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            ADLX_RESULT res = frtc->SetEnabled(isEnabled == true);
+
+                            if (isEnabled == true && ADLX_SUCCEEDED(res))
+                            {
+                                adlx_int fps = FPS;
+                                ADLX_IntRange range = { 0 };
+                                frtc->GetFPSRange(&range);
+                                if (fps >= range.minValue && fps <= range.maxValue)
+                                {
+                                    res = frtc->SetFPS(fps);
+                                    if (ADLX_SUCCEEDED(res))
+                                    {
+                                        return true;
+                                    }
+                                }
+                                
+                            }
+                           
+                        }
+                       
+                    }
+               
+                }
+
+            }
+
+        }
+        return false;
+    }
+    ADLX_3DSettings bool DisableFPSLimit(int GPU)
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get GPUs
+            IADLXGPUListPtr gpus;
+            res = g_ADLXHelp.GetSystemServices()->GetGPUs(&gpus);
+            if (ADLX_SUCCEEDED(res) && !gpus->Empty())
+            {
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Get GPU interface
+                    IADLXGPUPtr gpuInfo;
+                    adlx_uint index = GPU;
+                    res = gpus->At(index, &gpuInfo);
+                    if (ADLX_SUCCEEDED(res))
+                    {
+                        // Get FRTC interface
+                        IADLX3DFrameRateTargetControlPtr frtc;
+                        res = d3dSettingSrv->GetFrameRateTargetControl(gpuInfo, &frtc);
+                        if (ADLX_SUCCEEDED(res))
+                        {
+                            ADLX_RESULT res = frtc->SetEnabled(false);
+
+                            if (ADLX_SUCCEEDED(res))
+                            {
+                                res = g_ADLXHelp.Terminate();
+                                return true;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+        res = g_ADLXHelp.Terminate();
+        return false;
+    }
+
+
+    ADLX_3DSettings bool HasAFMFSupport()
+    {
+        // Define return code
+        ADLX_RESULT res = ADLX_FAIL;
+
+        // Initialize ADLX
+        res = g_ADLXHelp.Initialize();
+        if (ADLX_SUCCEEDED(res))
+        {
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+            if (ADLX_SUCCEEDED(res))
+            {
+
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
+                if (ADLX_SUCCEEDED(res))
+                {
+                    // Get 3DSettings service
+                    IADLX3DSettingsServices1Ptr d3dSettingSrv1(d3dSettingSrv);
+
+                    if (NULL != d3dSettingSrv1)
+                    {
+
+                        // Get AFMF interface
+                        IADLX3DAMDFluidMotionFramesPtr d3dAFMF;
+                        res = d3dSettingSrv1->GetAMDFluidMotionFrames(&d3dAFMF);
+
+
+                        if (ADLX_SUCCEEDED(res))
+                        {
+
+                            adlx_bool supported = false;
+                            ADLX_RESULT res = d3dAFMF->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
                                 return supported;
+                               
                             }
                         }
 
                     }
-
-
+                  
                 }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
 
             }
-        }
-        else
-        {
 
         }
-
         return false;
-
     }
-    ADLX_DisplaySettings bool IsFreeSyncEnabled2()
+    ADLX_3DSettings bool GetAFMFState()
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
         if (ADLX_SUCCEEDED(res))
         {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
             if (ADLX_SUCCEEDED(res))
             {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
+
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
                 if (ADLX_SUCCEEDED(res))
                 {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
+                    // Get 3DSettings service
+                    IADLX3DSettingsServices1Ptr d3dSettingSrv1(d3dSettingSrv);
+
+                    if (NULL != d3dSettingSrv1)
                     {
 
-                        IADLXDisplayFreeSyncPtr displayFreeSync;
+                        // Get AFMF interface
+                        IADLX3DAMDFluidMotionFramesPtr d3dAFMF;
+                        res = d3dSettingSrv1->GetAMDFluidMotionFrames(&d3dAFMF);
 
-                        res = displayService->GetFreeSync(display, &displayFreeSync);
 
                         if (ADLX_SUCCEEDED(res))
                         {
-                            adlx_bool supported = false;
-                            res = displayFreeSync->IsSupported(&supported);
 
+                            adlx_bool supported = false;
+                            ADLX_RESULT res = d3dAFMF->IsSupported(&supported);
                             if (ADLX_SUCCEEDED(res))
                             {
                                 if (supported)
                                 {
-                                    adlx_bool enabled = false;
 
-                                    res = displayFreeSync->IsEnabled(&enabled);
+                                    adlx_bool enabled = false;
+                                    ADLX_RESULT res = d3dAFMF->IsEnabled(&enabled);
 
                                     if (ADLX_SUCCEEDED(res))
                                     {
+
                                         return enabled;
+
                                     }
 
                                 }
-
                             }
-
-
+                           
                         }
 
                     }
 
-
-
-
                 }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
 
             }
-        }
-        else
-        {
 
         }
-
         return false;
-
-
     }
-    
-    ADLX_DisplaySettings bool SetFreeSync2(const int key)
+    ADLX_3DSettings bool SetAFMFState(bool isEnabled)
     {
         // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
+        ADLX_RESULT res = ADLX_FAIL;
 
         // Initialize ADLX
         res = g_ADLXHelp.Initialize();
         if (ADLX_SUCCEEDED(res))
         {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
+            // Get 3DSettings service
+            IADLX3DSettingsServicesPtr d3dSettingSrv;
+            res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
             if (ADLX_SUCCEEDED(res))
             {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
+
+                // Get 3DSettings service
+                IADLX3DSettingsServicesPtr d3dSettingSrv;
+                res = g_ADLXHelp.GetSystemServices()->Get3DSettingsServices(&d3dSettingSrv);
                 if (ADLX_SUCCEEDED(res))
                 {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
+                    // Get 3DSettings service
+                    IADLX3DSettingsServices1Ptr d3dSettingSrv1(d3dSettingSrv);
+
+                    if (NULL != d3dSettingSrv1)
                     {
 
-                        IADLXDisplayFreeSyncPtr displayFreeSync;
+                        // Get AFMF interface
+                        IADLX3DAMDFluidMotionFramesPtr d3dAFMF;
+                        res = d3dSettingSrv1->GetAMDFluidMotionFrames(&d3dAFMF);
 
-                        ADLX_RESULT res = displayService->GetFreeSync(display, &displayFreeSync);
 
                         if (ADLX_SUCCEEDED(res))
                         {
+
                             adlx_bool supported = false;
-                            res = displayFreeSync->IsSupported(&supported);
+                            ADLX_RESULT res = d3dAFMF->IsSupported(&supported);
 
                             if (ADLX_SUCCEEDED(res))
                             {
                                 if (supported)
                                 {
-                                    res = ADLX_FAIL;
-                                    switch (key)
+                                    if (isEnabled) 
                                     {
-                                        // Set freesync disabled
-                                    case 0:
-
-                                        res = displayFreeSync->SetEnabled(false);
-                                        return true;
-                                        break;
-                                        // Set freesync enabled
-                                    case 1:
-
-                                        res = displayFreeSync->SetEnabled(true);
-                                        return true;
-                                        break;
-                                    default:
-                                        break;
+                                        ADLX_RESULT res = d3dAFMF->SetEnabled(1);
+                                    }
+                                    else {
+                                        ADLX_RESULT res = d3dAFMF->SetEnabled(0);
                                     }
 
+                                    if (ADLX_SUCCEEDED(res))
+                                    {
+                                        res = g_ADLXHelp.Terminate();
+                                        return true;
 
-
+                                    }
 
                                 }
-
                             }
 
-
+                           
                         }
 
                     }
 
-
                 }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
 
             }
-        }
-        else
-        {
 
         }
-
-        return false;
-
-    }
-
-
-    ADLX_DisplaySettings bool HasVSRSupport1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayVSRPtr displayVSR;
-                        ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-
-                            return true;
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
+        res = g_ADLXHelp.Terminate();
         return false;
     }
-    ADLX_DisplaySettings int IsVSREnabled1()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayVSRPtr displayVSR;
-                        ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-
-                            adlx_bool enabled = false;
-                            res = displayVSR->IsEnabled(&enabled);
-                            if (enabled)
-                            {
-                                return true;
-                            }
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-
-    }
-    ADLX_DisplaySettings bool SetVSRState1(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 0;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayVSRPtr displayVSR;
-                        ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            IADLXDisplayVSRPtr displayVSR;
-                            ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                            if (ADLX_SUCCEEDED(res))
-                            {
-                                ADLX_RESULT res = ADLX_FAIL;
-                                switch (key)
-                                {
-                                    // Set VSR disabled
-                                case 0:
-                             
-                                    res = displayVSR->SetEnabled(false);
-                                    break;
-                                    // Set VSR enabled
-                                case 1:
-                                 
-                                    res = displayVSR->SetEnabled(true);
-                                    break;
-                                default:
-                                    break;
-                                }
-                              
-                            }
-                            if (ADLX_SUCCEEDED(res))
-                            {
-                                return true;
-                            }
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-
-    }
-
-    ADLX_DisplaySettings bool HasVSRSupport2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayVSRPtr displayVSR;
-                        ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-
-                            return true;
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-    }
-    ADLX_DisplaySettings int IsVSREnabled2()
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayVSRPtr displayVSR;
-                        ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-
-                            adlx_bool enabled = false;
-                            res = displayVSR->IsEnabled(&enabled);
-                            if (enabled)
-                            {
-                                return true;
-                            }
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-
-    }
-    ADLX_DisplaySettings int SetVSRState2(const int key)
-    {
-        // Define return code
-        ADLX_RESULT  res = ADLX_FAIL;
-
-        // Initialize ADLX
-        res = g_ADLXHelp.Initialize();
-        if (ADLX_SUCCEEDED(res))
-        {
-            // Get display service
-            IADLXDisplayServicesPtr displayService;
-            res = g_ADLXHelp.GetSystemServices()->GetDisplaysServices(&displayService);
-            if (ADLX_SUCCEEDED(res))
-            {
-                // Get display list
-                IADLXDisplayListPtr displayList;
-                res = displayService->GetDisplays(&displayList);
-                if (ADLX_SUCCEEDED(res))
-                {
-                    // Inspect for the first display in the list
-                    adlx_uint it = 1;
-                    IADLXDisplayPtr display;
-                    res = displayList->At(it, &display);
-                    if (ADLX_SUCCEEDED(res))
-                    {
-                        IADLXDisplayVSRPtr displayVSR;
-                        ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                        if (ADLX_SUCCEEDED(res))
-                        {
-                            IADLXDisplayVSRPtr displayVSR;
-                            ADLX_RESULT res = displayService->GetVirtualSuperResolution(display, &displayVSR);
-                            if (ADLX_SUCCEEDED(res))
-                            {
-                                ADLX_RESULT res = ADLX_FAIL;
-                                switch (key)
-                                {
-                                    // Set VSR disabled
-                                case 0:
-
-                                    res = displayVSR->SetEnabled(false);
-                                    break;
-                                    // Set VSR enabled
-                                case 1:
-
-                                    res = displayVSR->SetEnabled(true);
-                                    break;
-                                default:
-                                    break;
-                                }
-
-                            }
-                            if (ADLX_SUCCEEDED(res))
-                            {
-                                return true;
-                            }
-                        }
-
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-
-
-            }
-        }
-        else
-        {
-
-        }
-
-        return false;
-
-
-
-    }
-
-
-
 
 }
-
-
-
-
