@@ -12,6 +12,7 @@ Add the DLLs from the release zip file into your application.
 
 
 # Sample in C#
+```
 public static class ADLX_Management
 {
 
@@ -117,4 +118,4 @@ public static class ADLX_Management
 
 
 }
-
+```
