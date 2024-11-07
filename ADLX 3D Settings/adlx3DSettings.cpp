@@ -43,7 +43,7 @@ extern "C" {
                                 rsr->SetSharpness(sharpness);
                                 if (ADLX_SUCCEEDED(res))
                                 {
-                                    res = g_ADLXHelp.Terminate();
+                                    
                                     return true;
                                 }
                                 
@@ -59,7 +59,7 @@ extern "C" {
             }
            
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_3DSettings int GetRSRSharpness()
@@ -100,7 +100,7 @@ extern "C" {
 
                                 if (ADLX_SUCCEEDED(res))
                                 {
-                                    res = g_ADLXHelp.Terminate();
+                                    
                                     return sharpness;
                                 }
 
@@ -115,7 +115,7 @@ extern "C" {
 
         }
 
-        res = g_ADLXHelp.Terminate();
+        
         return -1;
     }
     ADLX_3DSettings bool HasRSRSupport()
@@ -148,7 +148,7 @@ extern "C" {
 
                         if (ADLX_SUCCEEDED(res))
                         {
-                            res = g_ADLXHelp.Terminate();
+                            
                             return supported;
                         }
 
@@ -161,7 +161,7 @@ extern "C" {
             }
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_3DSettings bool GetRSRState()
@@ -198,7 +198,7 @@ extern "C" {
                             rsr->IsEnabled(&enabled);
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
 
@@ -211,7 +211,7 @@ extern "C" {
             }
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_3DSettings bool SetRSR(bool isEnabled)
@@ -245,7 +245,7 @@ extern "C" {
                           
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
                         }
@@ -257,7 +257,7 @@ extern "C" {
             }
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_3DSettings bool MadeByProjectSBC()
@@ -302,7 +302,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return supported;
                             }
 
@@ -314,7 +314,7 @@ extern "C" {
             }
           
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_3DSettings bool IsFPSLimitEnabled(int GPU)
@@ -354,7 +354,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return enabled;
                             }
 
@@ -366,7 +366,7 @@ extern "C" {
             }
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
     ADLX_3DSettings bool SetFPSLimit(int GPU, bool isEnabled, int FPS)
@@ -462,7 +462,7 @@ extern "C" {
 
                             if (ADLX_SUCCEEDED(res))
                             {
-                                res = g_ADLXHelp.Terminate();
+                                
                                 return true;
                             }
 
@@ -475,7 +475,7 @@ extern "C" {
             }
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
 
@@ -648,7 +648,7 @@ extern "C" {
 
                                     if (ADLX_SUCCEEDED(res))
                                     {
-                                        res = g_ADLXHelp.Terminate();
+                                        
                                         return true;
 
                                     }
@@ -666,7 +666,7 @@ extern "C" {
             }
 
         }
-        res = g_ADLXHelp.Terminate();
+        
         return false;
     }
 
